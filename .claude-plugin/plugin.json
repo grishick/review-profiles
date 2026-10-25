@@ -1,0 +1,13 @@
+{
+  "name": "review-profiles",
+  "displayName": "Review profiles",
+  "version": "0.1.0",
+  "description": "Code-review skills built from two experienced reviewers' past reviews: adar's public Apache Kudu reviews and grishick's reviews across several projects. Report only; they print a markdown review and never post.",
+  "author": {
+    "name": "Greg Solovyev",
+    "url": "https://github.com/grishick"
+  },
+  "repository": "https://github.com/grishick/review-profiles",
+  "license": "MIT",
+  "keywords": ["code-review", "pull-request", "review"]
+}

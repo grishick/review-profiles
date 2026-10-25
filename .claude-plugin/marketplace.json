@@ -1,0 +1,15 @@
+{
+  "name": "review-profiles",
+  "description": "Code-review skills built from experienced reviewers' past reviews.",
+  "owner": {
+    "name": "Greg Solovyev",
+    "url": "https://github.com/grishick"
+  },
+  "plugins": [
+    {
+      "name": "review-profiles",
+      "source": "./",
+      "description": "Code-review skills built from adar's public Apache Kudu reviews and grishick's past reviews."
+    }
+  ]
+}
