@@ -15,7 +15,9 @@ profile is named after; neither person reviewed the output.
 
 ## Install
 
-In Claude Code:
+The skills need the GitHub CLI (`gh`), signed in to an account that can read the repository.
+
+### Claude Code
 
 ```text
 /plugin marketplace add grishick/review-profiles
@@ -28,7 +30,21 @@ To try a local copy without installing it:
 claude --plugin-dir ./review-profiles
 ```
 
-The skills need the GitHub CLI (`gh`), signed in to an account that can read the repository.
+### Codex
+
+Codex loads skills from `~/.agents/skills`. Clone the repository and link both skill folders there,
+so that a `git pull` updates them:
+
+```bash
+git clone https://github.com/grishick/review-profiles ~/src/review-profiles
+mkdir -p ~/.agents/skills
+ln -s ~/src/review-profiles/skills/review-like-kudu-reviewer ~/.agents/skills/
+ln -s ~/src/review-profiles/skills/review-like-grishick ~/.agents/skills/
+```
+
+Restart Codex afterwards. If the skills do not appear in `/skills`, copy the folders with `cp -R`
+instead of linking them. Codex's sandbox blocks network access by default, so approve the first
+`gh` call or start the session with network access allowed.
 
 ## Use
 
@@ -37,6 +53,12 @@ Ask for a review by name and give the PR URL:
 ```text
 Review https://github.com/owner/repo/pull/123 like the Kudu Reviewer
 /review-profiles:review-like-grishick https://github.com/owner/repo/pull/123
+```
+
+In Codex, type `$` and pick the skill:
+
+```text
+$review-like-kudu-reviewer https://github.com/owner/repo/pull/123
 ```
 
 Run the session from a clone of the PR's repository, so that the reviewer can read callers, siblings
