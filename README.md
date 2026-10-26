@@ -30,10 +30,10 @@ To try a local copy without installing it:
 claude --plugin-dir ./review-profiles
 ```
 
-### Codex
+### Codex, Cursor, Grok Build and Antigravity
 
-Codex loads skills from `~/.agents/skills`. Clone the repository and link both skill folders there,
-so that a `git pull` updates them:
+These tools read skills from `~/.agents/skills`. Clone the repository once and link both skill
+folders there, so that a `git pull` updates them in every tool:
 
 ```bash
 git clone https://github.com/grishick/review-profiles ~/src/review-profiles
@@ -42,23 +42,62 @@ ln -s ~/src/review-profiles/skills/review-like-kudu-reviewer ~/.agents/skills/
 ln -s ~/src/review-profiles/skills/review-like-grishick ~/.agents/skills/
 ```
 
-Restart Codex afterwards. If the skills do not appear in `/skills`, copy the folders with `cp -R`
-instead of linking them. Codex's sandbox blocks network access by default, so approve the first
-`gh` call or start the session with network access allowed.
+Restart the tool afterwards. If a tool does not list the skills, copy the folders with `cp -R`
+instead of linking them.
+
+#### Codex
+
+Type `$` or run `/skills` to pick a skill. Codex's sandbox blocks network access by default, so
+approve the first `gh` call or start the session with network access allowed.
+
+```text
+$review-like-kudu-reviewer https://github.com/owner/repo/pull/123
+```
+
+#### Cursor
+
+Type `/` in Agent chat and search for the skill name. Skills in `~/.agents/skills` load only on the
+local machine, so Cursor's Cloud Agents do not see them; for those, add the skill folders to the
+project's `.agents/skills/` instead.
+
+```text
+/review-like-grishick https://github.com/owner/repo/pull/123
+```
+
+#### Grok Build
+
+Grok Build lists each skill as a slash command.
+
+```text
+/review-like-kudu-reviewer https://github.com/owner/repo/pull/123
+```
+
+#### Antigravity
+
+The Antigravity app reads `~/.agents/skills`, but the Antigravity CLI does not. For the CLI, link
+the folders into `~/.gemini/config/skills/` as well:
+
+```bash
+mkdir -p ~/.gemini/config/skills
+ln -s ~/src/review-profiles/skills/review-like-kudu-reviewer ~/.gemini/config/skills/
+ln -s ~/src/review-profiles/skills/review-like-grishick ~/.gemini/config/skills/
+```
+
+If the CLI still does not list them in `/skills`, use `~/.gemini/antigravity-cli/skills/` instead.
+Antigravity picks a skill from its description, so name the skill in your request:
+
+```text
+Review https://github.com/owner/repo/pull/123 with the review-like-kudu-reviewer skill
+```
 
 ## Use
 
-Ask for a review by name and give the PR URL:
+In Claude Code, ask for a review by name and give the PR URL. The install sections above show how
+to invoke a skill in the other tools.
 
 ```text
 Review https://github.com/owner/repo/pull/123 like the Kudu Reviewer
 /review-profiles:review-like-grishick https://github.com/owner/repo/pull/123
-```
-
-In Codex, type `$` and pick the skill:
-
-```text
-$review-like-kudu-reviewer https://github.com/owner/repo/pull/123
 ```
 
 Run the session from a clone of the PR's repository, so that the reviewer can read callers, siblings
